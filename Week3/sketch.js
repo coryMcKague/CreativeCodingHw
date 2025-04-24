@@ -1,69 +1,191 @@
-function setup()
-{
-    createCanvas(500,600);
+var playerX = 400;
+var playerY = 400;
+
+var w = 87; 
+var s = 83;
+var a = 65;
+var d = 68;
+
+var obstacleX = 50;
+var obstacleY = 100;
+var obstacletXspeed;
+var obstacleYspeed;
+
+var obstacle2X = 300;
+var obstacle2Y = 100;
+var obstaclet2Xspeed;
+var obstacle2Yspeed;
+
+var objectX;
+var objectY;
+
+function setup() {
+  createCanvas(800, 600);
+    obstacleXSpeed = Math.floor(Math.random() * (Math.floor(Math.random() * 5)) + 1);
+    obstacleYSpeed = Math.floor(Math.random() * (Math.floor(Math.random() * 5)) + 1);
+    obstacle2XSpeed = Math.floor(Math.random() * (Math.floor(Math.random() * 5)) + 1);
+    obstacle2YSpeed = Math.floor(Math.random() * (Math.floor(Math.random() * 5)) + 1);
+    createPlayer(50,50);
 }
 
-function draw()
+function draw() {
+  background(50,100,0);
+  
+  createBorders (20,30,0);
+  
+  createFinish();
+  
+  createWin();
+  
+  drawObstacle();
+  obstacleMovement();
+  
+  drawObstacle2();
+  obstacle2Movement();
+  
+  drawPlayer();
+  playerMovement();
+  
+  drawObject ();
+  
+  
+}
+
+
+function drawObstacle ()
 {
-    background(53, 94, 59);
+  fill(100,1,1);
+  circle(obstacleX, obstacleY, 25);
+}
 
-    //back of hair
-    fill(230, 180, 119);
-    rect(155, 80, 195, 135);
+function obstacleMovement ()
+{
+    obstacleXSpeed = Math.floor(Math.random() * (Math.floor(Math.random() * 5)) + 1);
+    obstacleYSpeed = Math.floor(Math.random() * (Math.floor(Math.random() * 5)) + 1);
 
-    //body
-    fill(0, 0, 0);
-    triangle(170, 220, 250, 370, 330, 220);
+    obstacleX += obstacleXSpeed;
+    obstacleY += obstacleYSpeed;
 
-    //head
-    fill (255, 222, 199);
-    ellipse(250, 122, 150);
+  if(obstacleX > width)
+    {
+        obstacleX = 0;
+    }
+    if(obstacleX < 0)
+    {
+        obstacleX = width;
+    }
+    if(obstacleY > height)
+    {
+        obstacleY = 0;
+    }
+    if(obstacleY < 0)
+    {
+        obstacleY = height;
+    }
+}
 
-    //hair bangs
-    fill(230, 180, 119);
-    arc(250, 130, 130, 120, PI, TWO_PI);
+function drawObstacle2 ()
+{
+  fill(180,20,50);
+  circle(obstacle2X, obstacle2Y, 100);
+}
 
-    //eyes
-    fill(255);
-    ellipse (220, 150, 30, 20);
-    ellipse(280, 150, 30, 20);
-    fill(53, 94, 59);
-    ellipse(220, 150, 15, 20);
-    ellipse(280, 150, 15, 20);
+function obstacle2Movement ()
+{
+  obstacle2XSpeed = Math.floor(Math.random() * (Math.floor(Math.random() * 5)) + 1);
+  obstacle2YSpeed = Math.floor(Math.random() * (Math.floor(Math.random() * 5)) + 1);
 
-    //glasses
-    strokeWeight(5);
-    noFill();
-        //left
-    square(200, 130, 40);
-    line(200, 150, 180, 150);
-        //right
-    square(260, 130, 40);
-    line(320, 150, 300, 150);
-        //center
-    line(240, 150, 260, 150);
-    strokeWeight(1);
+  obstacle2X += obstacle2XSpeed;
+  obstacle2Y += obstacle2YSpeed;
 
-    //mouth
-    fill(255, 192, 203);
-    arc(250, 190, 30, 30, 0, radians(180), PIE);
-    fill(248, 131, 121);
-    arc(250, 203.5, 15, 5, PI, TWO_PI);
+  if(obstacle2X > width)
+    {
+        obstacle2X = 0;
+    }
+    if(obstacle2X < 0)
+    {
+        obstacle2X = width;
+    }
+    if(obstacle2Y > height)
+    {
+        obstacle2Y = 0;
+    }
+    if(obstacle2Y < 0)
+    {
+        obstacle2Y = height;
+    }
+}
 
-    //nose
-    strokeWeight(3);
-    point(250,175);
-    strokeWeight(1);
+function playerMovement ()
+{
+  if(keyIsDown(w))
+    {
+        playerY -= 10;   
+    }
+    if(keyIsDown(s))
+    {
+        playerY += 10;   
+    }
+    if(keyIsDown(a))
+    {
+        playerX -= 10;   
+        console.log("movement: " + playerX);
+    }
+    if(keyIsDown(d))
+    {
+        playerX += 10;   
+    }
+}
 
-    //title
-    fill(255);
-    textsize(22);
-    text("It's-a me, Madaline!", 155, 400);
+function createPlayer (x,y)
+{
+  playerX = x;
+  playerY = y;
+  console.log(playerX);
+}
 
-    //signature
-    fill(0, 0, 0);
-    textStyle(OTALIC);
-    textSize(18);
-    text("Madaline Brown", 183, 435);
+function drawPlayer ()
+{
+  fill(200, 30, 200);
+  circle(playerX,playerY, 50)
+}
+
+function createBorders (thickness)
+{
+  rect(0,0,width-110,thickness);
+  
+  rect(0,0,thickness,height);
     
+  rect(0, height-thickness,width,thickness);
+    
+  rect(width-thickness,0,thickness,height);
+}
+
+function createFinish ()
+{
+  textSize(25);
+  text("FINISH", width-110,height/2-250)
+}
+
+function createWin ()
+{
+   if(playerX > width && playerY > width/2-550)
+    {
+      fill(400);
+      stroke(5);
+      textSize(26);
+      text("You Win! :D", width/2-50, height/2-50);
+    }
+}
+
+function mouseClicked()
+{
+  objectX = mouseX;
+  objectY = mouseY; 
+}
+
+function drawObject ()
+{
+  fill(400,20,50);
+  circle(objectX, objectY,75);
 }
