@@ -1,7 +1,10 @@
 var song;
 
+function preload() {
+    song = loadSound('./musicSources/bass.wav');
+}
 function setup() {
-  song = loadSound('./musicSources/bass.wav');
+
   createCanvas(720, 200);
   background(255, 0, 0);
 }
