@@ -1,7 +1,7 @@
 let mySound;
 function preload() {
   soundFormats('wav');
-  mySound = loadSound('/musicSources/bass');
+  mySound = loadSound('guitarLeft.wav');
 }
 
 function setup() {
