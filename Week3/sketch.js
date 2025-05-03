@@ -1,9 +1,7 @@
-let mySound;
-function preload() {
-  mySound = loadSound('./musicSources/bass.wav');
-}
+var mySound;
 
 function setup() {
+  mySound = loadSound('./musicSources/bass.wav');
   let cnv = createCanvas(100, 100);
   cnv.mousePressed(canvasPressed);
   background(220);
